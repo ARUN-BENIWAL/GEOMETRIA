@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Lab - Geometria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    /* Mode Switch */
+    .mode-switch {
+      display: flex;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 4px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .mode-btn {
+      flex: 1;
+      margin: 0;
+      padding: 10px 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .mode-btn:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      transform: none;
+      box-shadow: none;
+    }
+
+    .mode-btn.active {
+      background: #c792ea;
+      color: #0c0b10;
+      box-shadow: 0 0 18px rgba(199, 146, 234, 0.25);
+      font-weight: 700;
+    }
+
+    .mode-btn.active:hover {
+      transform: none;
+    }
+
+    /* 3D container */
+    #threeContainer {
+      width: 100%;
+      height: 100%;
+    }
+
+    #threeContainer canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
+    /* Value display next to sliders */
+    .slider-value {
+      min-width: 35px;
+      text-align: right;
+      font-size: 11px;
+      color: #f78c6c;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-weight: 600;
+    }
+
+    /* Section divider */
+    .section-divider {
+      height: 1px;
+      background: var(--glass-border);
+      margin: 5px 0;
+    }
+
+    /* Navigation buttons */
+    .nav-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .nav-btn {
+      margin: 0;
+      padding: 8px;
+      font-size: 11px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      transform: none;
+      box-shadow: none;
+    }
+  </style>
+</head>
+
+<body class="lab-body">
+
+  <header>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="index.html" style="color:#8a889a;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#8a889a'">← Back</a>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">GEOMETRIA</div>
+    </div>
+    <nav>
+      <a href="2d.html">2D</a>
+      <a href="3d.html">3D</a>
+      <a href="lab.html" class="active">VISUAL LAB</a>
+    </nav>
+  </header>
+
+  <div class="lab-container">
+    <div class="glass-panel">
+      <h2>Visual Lab</h2>
+
+      <!-- Mode Switch -->
+      <div class="mode-switch">
+        <button class="mode-btn active" id="btn2d" onclick="switchMode('2d')">2D</button>
+        <button class="mode-btn" id="btn3d" onclick="switchMode('3d')">3D</button>
+      </div>
+
+      <!-- ===================== 2D CONTROLS ===================== -->
+      <div id="controls2D">
+        <div class="control-group">
+          <label>Shape</label>
+          <select id="shapeSelect" onchange="changeShape(this.value)" class="glass-select">
+            <option value="triangle">Triangle</option>
+            <option value="rectangle">Rectangle</option>
+            <option value="pentagon">Pentagon</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <h3>Translation</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="tx" type="range" min="-200" max="200" value="0" oninput="update2D()">
+            <span class="slider-value" id="txVal">0</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="ty" type="range" min="-200" max="200" value="0" oninput="update2D()">
+            <span class="slider-value" id="tyVal">0</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3>Rotation</h3>
+          <div class="slider-row">
+            <span>&deg;</span>
+            <input id="angle" type="range" min="0" max="360" value="0" oninput="update2D()">
+            <span class="slider-value" id="angleVal">0°</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3>Scaling</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="sx" type="range" min="0.1" max="3" step="0.1" value="1" oninput="update2D()">
+            <span class="slider-value" id="sxVal">1.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="sy" type="range" min="0.1" max="3" step="0.1" value="1" oninput="update2D()">
+            <span class="slider-value" id="syVal">1.0</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3>Shearing</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="shx" type="range" min="-2" max="2" step="0.1" value="0" oninput="update2D()">
+            <span class="slider-value" id="shxVal">0.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="shy" type="range" min="-2" max="2" step="0.1" value="0" oninput="update2D()">
+            <span class="slider-value" id="shyVal">0.0</span>
+          </div>
+        </div>
+
+        <div class="button-grid">
+          <button onclick="reflectX2D()" class="small-btn">Reflect X</button>
+          <button onclick="reflectY2D()" class="small-btn">Reflect Y</button>
+          <button onclick="undo2D()" class="small-btn">Undo</button>
+          <button onclick="redo2D()" class="small-btn">Redo</button>
+          <button onclick="reset2D()" class="small-btn red-btn">Reset</button>
+        </div>
+
+
+
+        <div class="toggle-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="toggleOriginal" checked onchange="draw2D()">
+            <span class="custom-checkbox"></span>
+            Show Original
+          </label>
+        </div>
+
+        <pre id="matrix2d" class="glass-matrix"></pre>
+      </div>
+
+      <!-- ===================== 3D CONTROLS ===================== -->
+      <div id="controls3D" style="display:none;">
+        <div class="control-group">
+          <label>Shape</label>
+          <select id="shape3DSelect" onchange="change3DShape(this.value)" class="glass-select">
+            <option value="cube">Cube</option>
+            <option value="sphere">Sphere</option>
+            <option value="torus">Torus</option>
+            <option value="cone">Cone</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <h3>Translation</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="t3x" type="range" min="-5" max="5" step="0.1" value="0" oninput="update3D()">
+            <span class="slider-value" id="t3xVal">0.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="t3y" type="range" min="-5" max="5" step="0.1" value="0" oninput="update3D()">
+            <span class="slider-value" id="t3yVal">0.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Z</span>
+            <input id="t3z" type="range" min="-5" max="5" step="0.1" value="0" oninput="update3D()">
+            <span class="slider-value" id="t3zVal">0.0</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3>Rotation</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="r3x" type="range" min="0" max="360" value="0" oninput="update3D()">
+            <span class="slider-value" id="r3xVal">0°</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="r3y" type="range" min="0" max="360" value="0" oninput="update3D()">
+            <span class="slider-value" id="r3yVal">0°</span>
+          </div>
+          <div class="slider-row">
+            <span>Z</span>
+            <input id="r3z" type="range" min="0" max="360" value="0" oninput="update3D()">
+            <span class="slider-value" id="r3zVal">0°</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <h3>Scaling</h3>
+          <div class="slider-row">
+            <span>X</span>
+            <input id="s3x" type="range" min="0.1" max="3" step="0.1" value="1" oninput="update3D()">
+            <span class="slider-value" id="s3xVal">1.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Y</span>
+            <input id="s3y" type="range" min="0.1" max="3" step="0.1" value="1" oninput="update3D()">
+            <span class="slider-value" id="s3yVal">1.0</span>
+          </div>
+          <div class="slider-row">
+            <span>Z</span>
+            <input id="s3z" type="range" min="0.1" max="3" step="0.1" value="1" oninput="update3D()">
+            <span class="slider-value" id="s3zVal">1.0</span>
+          </div>
+        </div>
+
+        <div class="button-grid">
+          <button onclick="reflect3D('x')" class="small-btn">Reflect X</button>
+          <button onclick="reflect3D('y')" class="small-btn">Reflect Y</button>
+          <button onclick="reflect3D('z')" class="small-btn">Reflect Z</button>
+          <button onclick="reset3D()" class="small-btn red-btn" style="grid-column: span 1;">Reset</button>
+        </div>
+
+        <div class="control-group">
+          <h3>Projection</h3>
+          <div class="toggle-row" style="margin:0;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="orthoToggle" onchange="toggleProjection()">
+              <span class="custom-checkbox"></span>
+              Orthographic
+            </label>
+          </div>
+          <span id="projLabel" style="font-size:11px;color:#89ddff;margin-top:4px;display:block;">📐 Perspective Projection</span>
+        </div>
+
+
+
+        <pre id="matrix3d" class="glass-matrix"></pre>
+      </div>
+
+      <!-- Navigation -->
+      <div class="section-divider"></div>
+      <div class="nav-btn-grid">
+        <button class="nav-btn" onclick="window.location.href='2d.html'">📐 2D Theory</button>
+        <button class="nav-btn" onclick="window.location.href='3d.html'">📦 3D Theory</button>
+      </div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <div class="canvas-glow"></div>
+      <canvas id="canvas"></canvas>
+      <div id="threeContainer" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>

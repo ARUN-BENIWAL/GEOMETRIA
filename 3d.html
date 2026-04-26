@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Transformations - Geometria</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="3d.css">
+</head>
+<body>
+  <header>
+    <div style="display:flex;align-items:center;gap:20px;">
+      <a href="index.html" style="color:#8a889a;text-decoration:none;font-size:14px;display:flex;align-items:center;gap:6px;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#8a889a'">← Back</a>
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor:pointer;">GEOMETRIA</div>
+    </div>
+    <nav>
+      <a href="2d.html">2D</a>
+      <a href="3d.html" class="active">3D</a>
+      <a href="lab.html">VISUAL LAB</a>
+    </nav>
+  </header>
+  <div class="container">
+    <svg width="0" height="0" style="position:absolute;">
+        <defs>
+            <pattern id="grid1" width="15" height="15" patternUnits="userSpaceOnUse">
+              <path d="M 15 0 L 0 0 0 15" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+            </pattern>
+            <marker id="arrow-axis" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto-start-reverse">
+              <path d="M0,0 L4,2 L0,4 Z" fill="rgba(255,255,255,0.3)"/>
+            </marker>
+            <marker id="arrow-orange" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ffffff" /></marker>
+            <marker id="arrow-green" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ffffff" /></marker>
+            <marker id="arrow-blue" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ffffff" /></marker>
+            <marker id="arrow-purple" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ffffff" /></marker>
+            <marker id="arrow-red" markerWidth="4" markerHeight="4" refX="3" refY="2" orient="auto"><path d="M0,0 L4,2 L0,4 Z" fill="#ffffff" /></marker>
+        </defs>
+    </svg>
+
+    <!-- 1 TRANSLATION -->
+    <div class="row orange">
+      <div class="col text">
+        <h2>01 TRANSLATION</h2>
+        <p>Moves an object from one position to another without changing its size or orientation in 3D space.</p>
+        <div class="example">
+          <span class="icon">💡</span>
+          <div class="example-text">
+            <strong>Example:</strong><br>If tx = 3, ty = 2, tz = 5 and a point P(x, y, z) = (1, 2, 3), then P' = (x + 3, y + 2, z + 5) = (4, 4, 8)
+          </div>
+        </div>
+      </div>
+      <div class="col matrix">
+        <pre>
+[ 1  0  0  tx ]
+[ 0  1  0  ty ]
+[ 0  0  1  tz ]
+[ 0  0  0   1 ]
+        </pre>
+      </div>
+      <div class="col diagram">
+        <svg width="100%" viewBox="20 60 260 120">
+          <rect width="100%" height="100%" fill="url(#grid1)" />
+          
+          <line x1="40" y1="140" x2="90" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="40" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="65" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="95" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="32" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="67" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="40,115 52.5,102.5 77.5,102.5 65,115" fill="#ffcdb2" stroke="#f78c6c" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="40,140 65,140 65,115 40,115" fill="#e07a5f" stroke="#f78c6c" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="65,140 77.5,127.5 77.5,102.5 65,115" fill="#c45d3e" stroke="#f78c6c" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="90" y1="110" x2="130" y2="95" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-orange)"/><polygon points="150,110 175,110 187.5,97.5 187.5,72.5 162.5,72.5 150,85" fill="rgba(247,140,108,0.12)" stroke="none"/>
+<polyline points="150,85 162.5,72.5 187.5,72.5 175,85" fill="none" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="150,110 150,85" fill="none" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="150,110 175,110 175,85" fill="none" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="175,110 187.5,97.5 187.5,72.5" fill="none" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<line x1="175" y1="85" x2="187.5" y2="72.5" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="150" y1="85" x2="175" y2="85" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="175" y1="110" x2="175" y2="85" stroke="#f78c6c" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<text x="45" y="165" fill="#f78c6c" font-size="10">(x, y, z)</text><text x="145" y="145" fill="#f78c6c" font-size="10">(x+tx, y+ty, z+tz)</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 2 SCALING -->
+    <div class="row green">
+      <div class="col text">
+        <h2>02 SCALING</h2>
+        <p>Resizes an object by scaling it along the x, y, and z axes.</p>
+        <div class="example">
+          <span class="icon">💡</span>
+          <div class="example-text">
+            <strong>Example:</strong><br>If sx = 2, sy = 3, sz = 0.5 and P(x, y, z) = (1, 2, 4), then P' = (2, 6, 2)
+          </div>
+        </div>
+      </div>
+      <div class="col matrix">
+        <pre>
+[ sx  0   0   0 ]
+[ 0  sy   0   0 ]
+[ 0   0  sz   0 ]
+[ 0   0   0   1 ]
+        </pre>
+      </div>
+      <div class="col diagram">
+        <svg width="100%" viewBox="20 60 260 120">
+          <rect width="100%" height="100%" fill="url(#grid1)" />
+          
+          <line x1="40" y1="140" x2="90" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="40" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="65" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="95" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="32" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="67" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="40,125 47.5,117.5 62.5,117.5 55,125" fill="#dce8b4" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="40,140 55,140 55,125 40,125" fill="#8ab060" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="55,140 62.5,132.5 62.5,117.5 55,125" fill="#6d9048" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="75" y1="110" x2="115" y2="95" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-green)"/><polygon points="130,80 137.5,72.5 177.5,72.5 170,80" fill="#dce8b4" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="130,120 170,120 170,80 130,80" fill="#8ab060" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="170,120 177.5,112.5 177.5,72.5 170,80" fill="#6d9048" stroke="#c3e88d" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="45" y="165" fill="#c3e88d" font-size="10">(x, y, z)</text><text x="130" y="155" fill="#c3e88d" font-size="10">(sx*x, sy*y, sz*z)</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 3 ROTATION -->
+    <div class="row blue">
+      <div class="col text">
+        <h2>03 ROTATION</h2>
+        <p>Rotates an object around one of the principal axes (X, Y, or Z).</p>
+        <div class="example">
+          <span class="icon">💡</span>
+          <div class="example-text">
+            <strong>Example:</strong><br>Rotate point P(1, 0, 0) by 90° about Z-axis, then P' = (0, 1, 0)
+          </div>
+        </div>
+      </div>
+      <div class="col multi-matrix">
+        <div><span class="matrix-label">About X-axis</span><pre>
+[ 1    0      0    0 ]
+[ 0  cosθ  -sinθ   0 ]
+[ 0  sinθ   cosθ   0 ]
+[ 0    0      0    1 ]</pre></div>
+        <div><span class="matrix-label">About Y-axis</span><pre>
+[  cosθ   0  sinθ  0 ]
+[   0     1    0   0 ]
+[ -sinθ   0  cosθ  0 ]
+[   0     0    0   1 ]</pre></div>
+        <div><span class="matrix-label">About Z-axis</span><pre>
+[ cosθ  -sinθ  0   0 ]
+[ sinθ   cosθ  0   0 ]
+[  0      0    1   0 ]
+[  0      0    0   1 ]</pre></div>
+      </div>
+      <div class="col diagram">
+        <svg width="100%" viewBox="10 65 370 110">
+          <rect width="100%" height="100%" fill="url(#grid1)" />
+          
+          <line x1="40" y1="140" x2="90" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="40" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="140" x2="65" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="95" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="32" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="67" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="40,115 52.5,102.5 77.5,102.5 65,115" fill="#b8ccf5" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="40,140 65,140 65,115 40,115" fill="#5a7ec2" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="65,140 77.5,127.5 77.5,102.5 65,115" fill="#4565a0" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="85" cy="127" rx="5" ry="15" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3,3"/><path d="M 85 112 L 90 107 L 80 107 Z" fill="#ffffff" /><text x="50" y="160" fill="#82aaff" font-size="10" font-weight="bold">Rotate X</text>
+          <line x1="170" y1="140" x2="220" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="170" y1="140" x2="170" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="170" y1="140" x2="195" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="225" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="162" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="197" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="170,115 182.5,102.5 207.5,102.5 195,115" fill="#b8ccf5" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="170,140 195,140 195,115 170,115" fill="#5a7ec2" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="195,140 207.5,127.5 207.5,102.5 195,115" fill="#4565a0" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="195" cy="115" rx="15" ry="5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3,3" transform="rotate(-45 195 115)"/><path d="M 210 115 L 215 120 L 215 110 Z" fill="#ffffff" transform="rotate(-45 210 115)"/><text x="190" y="160" fill="#82aaff" font-size="10" font-weight="bold">Rotate Y</text>
+          <line x1="300" y1="140" x2="350" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="300" y1="140" x2="300" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="300" y1="140" x2="325" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="355" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="292" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="327" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="300,115 312.5,102.5 337.5,102.5 325,115" fill="#b8ccf5" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="300,140 325,140 325,115 300,115" fill="#5a7ec2" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="325,140 337.5,127.5 337.5,102.5 325,115" fill="#4565a0" stroke="#82aaff" stroke-width="1.5" stroke-linejoin="round"/>
+<ellipse cx="300" cy="100" rx="15" ry="5" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3,3"/><path d="M 315 100 L 320 95 L 320 105 Z" fill="#ffffff" /><text x="330" y="160" fill="#82aaff" font-size="10" font-weight="bold">Rotate Z</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 4 REFLECTION -->
+    <div class="row purple">
+      <div class="col text">
+        <h2>04 REFLECTION</h2>
+        <p>Mirrors an object across a 3D plane (XY, YZ, or ZX).</p>
+        <div class="example">
+          <span class="icon">💡</span>
+          <div class="example-text">
+            <strong>Example:</strong><br>Reflect point P(4, 2, 3) across YZ-plane (x=0), then P' = (-4, 2, 3)
+          </div>
+        </div>
+      </div>
+      <div class="col multi-matrix">
+        <div><span class="matrix-label">XY-plane (z=0)</span><pre>
+[ 1  0  0  0 ]
+[ 0  1  0  0 ]
+[ 0  0 -1  0 ]
+[ 0  0  0  1 ]</pre></div>
+        <div><span class="matrix-label">YZ-plane (x=0)</span><pre>
+[-1  0  0  0 ]
+[ 0  1  0  0 ]
+[ 0  0  1  0 ]
+[ 0  0  0  1 ]</pre></div>
+        <div><span class="matrix-label">ZX-plane (y=0)</span><pre>
+[ 1  0  0  0 ]
+[ 0 -1  0  0 ]
+[ 0  0  1  0 ]
+[ 0  0  0  1 ]</pre></div>
+      </div>
+      <div class="col diagram">
+        <svg width="100%" viewBox="10 65 370 110">
+          <rect width="100%" height="100%" fill="url(#grid1)" />
+          
+          <line x1="40" y1="130" x2="90" y2="130" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="130" x2="40" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="40" y1="130" x2="65" y2="105" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="95" y="134" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="32" y="85" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="67" y="103" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="30,130 90,130 110,110 50,110" fill="rgba(199,146,234,0.12)" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4"/><polygon points="50,85 60,75 80,75 70,85" fill="#dcc8f0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="50,105 70,105 70,85 50,85" fill="#9a6cc0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="70,105 80,95 80,75 70,85" fill="#7d52a6" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="50,150 70,150 80,140 80,120 60,120 50,130" fill="rgba(199,146,234,0.12)" stroke="none"/>
+<polyline points="50,130 60,120 80,120 70,130" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="50,150 50,130" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="50,150 70,150 70,130" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="70,150 80,140 80,120" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<line x1="70" y1="130" x2="80" y2="120" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="50" y1="130" x2="70" y2="130" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="70" y1="150" x2="70" y2="130" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<text x="50" y="165" fill="#c792ea" font-size="10" font-weight="bold">XY Plane</text>
+          <line x1="170" y1="130" x2="220" y2="130" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="170" y1="130" x2="170" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="170" y1="130" x2="195" y2="105" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="225" y="134" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="162" y="85" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="197" y="103" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="170,140 170,80 190,60 190,120" fill="rgba(199,146,234,0.12)" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4"/><polygon points="190,100 200,90 220,90 210,100" fill="#dcc8f0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="190,120 210,120 210,100 190,100" fill="#9a6cc0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="210,120 220,110 220,90 210,100" fill="#7d52a6" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="140,120 160,120 170,110 170,90 150,90 140,100" fill="rgba(199,146,234,0.12)" stroke="none"/>
+<polyline points="140,100 150,90 170,90 160,100" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="140,120 140,100" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="140,120 160,120 160,100" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="160,120 170,110 170,90" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<line x1="160" y1="100" x2="170" y2="90" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="140" y1="100" x2="160" y2="100" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="160" y1="120" x2="160" y2="100" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<text x="180" y="165" fill="#c792ea" font-size="10" font-weight="bold">YZ Plane</text>
+          <line x1="300" y1="130" x2="350" y2="130" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="300" y1="130" x2="300" y2="80" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="300" y1="130" x2="325" y2="105" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="355" y="134" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="292" y="85" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="327" y="103" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="290,130 370,130 370,80 290,80" fill="rgba(199,146,234,0.12)" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4"/><polygon points="300,100 310,90 330,90 320,100" fill="#dcc8f0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="300,120 320,120 320,100 300,100" fill="#9a6cc0" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="320,120 330,110 330,90 320,100" fill="#7d52a6" stroke="#c792ea" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="315,105 335,105 345,95 345,75 325,75 315,85" fill="rgba(199,146,234,0.12)" stroke="none"/>
+<polyline points="315,85 325,75 345,75 335,85" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="315,105 315,85" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="315,105 335,105 335,85" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<polyline points="335,105 345,95 345,75" fill="none" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linejoin="round"/>
+<line x1="335" y1="85" x2="345" y2="75" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="315" y1="85" x2="335" y2="85" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<line x1="335" y1="105" x2="335" y2="85" stroke="#c792ea" stroke-width="1.5" stroke-dasharray="4,4" stroke-linecap="round"/>
+<text x="310" y="165" fill="#c792ea" font-size="10" font-weight="bold">ZX Plane</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- 5 SHEARING -->
+    <div class="row red">
+      <div class="col text">
+        <h2>05 SHEARING</h2>
+        <p>Slants an object parallel to one of the coordinate planes.</p>
+        <div class="example">
+          <span class="icon">💡</span>
+          <div class="example-text">
+            <strong>Example:</strong><br>Shear in X direction with kxy = 1. Point P(1, 2, 3) becomes P'(3, 2, 3)
+          </div>
+        </div>
+      </div>
+      <div class="col multi-matrix">
+        <div><span class="matrix-label">Shear X (kxy, kxz)</span><pre>
+[ 1  kxy kxz 0 ]
+[ 0   1   0  0 ]
+[ 0   0   1  0 ]
+[ 0   0   0  1 ]</pre></div>
+        <div><span class="matrix-label">Shear Y (kyx, kyz)</span><pre>
+[ 1   0   0  0 ]
+[ kyx 1  kyz 0 ]
+[ 0   0   1  0 ]
+[ 0   0   0  1 ]</pre></div>
+        <div><span class="matrix-label">Shear Z (kzx, kzy)</span><pre>
+[  1   0   0  0 ]
+[  0   1   0  0 ]
+[ kzx kzy  1  0 ]
+[  0   0   0  1 ]</pre></div>
+      </div>
+      <div class="col diagram">
+        <svg width="100%" viewBox="10 65 370 110">
+          <rect width="100%" height="100%" fill="url(#grid1)" />
+          
+          <line x1="30" y1="140" x2="80" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="30" y1="140" x2="30" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="30" y1="140" x2="55" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="85" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="22" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="57" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="30,122 39,113 57,113 48,122" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="30,140 48,140 48,122 30,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="48,140 57,131 57,113 48,122" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="60" y1="125" x2="75" y2="125" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
+          <line x1="85" y1="140" x2="135" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="85" y1="140" x2="85" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="85" y1="140" x2="110" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="140" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="77" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="112" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="100,122 109,113 127,113 118,122" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="85,140 103,140 118,122 100,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="103,140 112,131 127,113 118,122" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="40" y="165" fill="#f07178" font-size="10" font-weight="bold">Shear X</text>
+          <line x1="160" y1="140" x2="210" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="160" y1="140" x2="160" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="160" y1="140" x2="185" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="215" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="152" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="187" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="160,122 169,113 187,113 178,122" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="160,140 178,140 178,122 160,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="178,140 187,131 187,113 178,122" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="190" y1="125" x2="205" y2="125" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
+          <line x1="215" y1="140" x2="265" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="215" y1="140" x2="215" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="215" y1="140" x2="240" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="270" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="207" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="242" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="215,122 236.5,100.5 254.5,100.5 233,122" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="215,140 233,140 233,122 215,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="233,140 254.5,118.5 254.5,100.5 233,122" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="170" y="165" fill="#f07178" font-size="10" font-weight="bold">Shear Y</text>
+          <line x1="290" y1="140" x2="340" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="290" y1="140" x2="290" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="290" y1="140" x2="315" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="345" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="282" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="317" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="290,122 299,113 317,113 308,122" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="290,140 308,140 308,122 290,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="308,140 317,131 317,113 308,122" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<line x1="320" y1="125" x2="335" y2="125" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
+          <line x1="345" y1="140" x2="395" y2="140" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="345" y1="140" x2="345" y2="90" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <line x1="345" y1="140" x2="370" y2="115" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" marker-end="url(#arrow-axis)"/>
+          <text x="400" y="144" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">x</text>
+          <text x="337" y="95" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">z</text>
+          <text x="372" y="113" fill="rgba(255,255,255,0.5)" font-size="10" font-style="italic">y</text>
+    <polygon points="345,122 354,113 372,98 363,107" fill="#f5b8ba" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="345,140 363,125 363,107 345,122" fill="#c0545a" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<polygon points="363,125 372,116 372,98 363,107" fill="#a03e44" stroke="#f07178" stroke-width="1.5" stroke-linejoin="round"/>
+<text x="300" y="165" fill="#f07178" font-size="10" font-weight="bold">Shear Z</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

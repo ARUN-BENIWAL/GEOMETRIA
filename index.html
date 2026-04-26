@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geometria</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">GEOMETRIA</div>
+    <nav>
+      <a href="2d.html">2D</a>
+      <a href="3d.html">3D</a>
+      <a href="lab.html">VISUAL LAB</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-text">
+      <h1>Understand<br>Transformations</h1>
+
+      <p class="sub">Shapes change. Truth remains.</p>
+
+      <p class="desc">
+        Geometry sirf calculation nahi — ek language hai
+        jo universe ko describe karti hai.
+      </p>
+
+      <button>Start Exploring &rarr;</button>
+    </div>
+
+    <!-- PURE VISUAL COMPOSITION -->
+    <div class="hero-visual">
+      <div class="glow-sphere"></div>
+
+      <div class="cards">
+        <div class="card" onclick="window.location.href='2d.html'">
+          <div class="glow orange-glow"></div>
+          <div class="card-content">
+            <h3>2D Transformations</h3>
+            <div class="line orange"></div>
+          </div>
+          <img src="2d.png" class="card-icon" alt="2D Transformations">
+        </div>
+
+        <div class="card" onclick="window.location.href='3d.html'">
+          <div class="glow blue-glow"></div>
+          <div class="card-content">
+            <h3>3D Transformations</h3>
+            <div class="line blue"></div>
+          </div>
+          <img src="3d.png" class="card-icon" alt="3D Transformations">
+        </div>
+
+        <div class="card" onclick="window.location.href='lab.html'">
+          <div class="glow green-glow"></div>
+          <div class="card-content">
+            <h3>Visual Lab</h3>
+            <div class="line green"></div>
+          </div>
+          <img src="lab.png" class="card-icon" alt="Visual Lab">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+
+</html>

@@ -1,0 +1,259 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap');
+
+:root {
+  --bg-dark: #0c0b10;
+  --text-main: #e8e6f0;
+  --text-muted: #8a889a;
+  
+  --accent-orange: #f78c6c;
+  --accent-green: #c3e88d;
+  --accent-blue: #82aaff;
+  --accent-purple: #c792ea;
+  --accent-red: #f07178;
+  
+  --glass-bg: rgba(255, 255, 255, 0.025);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  position: relative;
+  overflow-x: hidden;
+}
+
+
+
+/* CONTAINER */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ROW */
+.row {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 1.6fr;
+  gap: 30px;
+  padding: 35px 40px;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  align-items: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.row:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Subtle glow behind rows */
+.row::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  top: -40px;
+  left: -40px;
+  z-index: -1;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.row:hover::after {
+  opacity: 0.3;
+}
+
+.orange::after { background: var(--accent-orange); }
+.green::after  { background: var(--accent-green); }
+.blue::after   { background: var(--accent-blue); }
+.purple::after { background: var(--accent-purple); }
+.red::after    { background: var(--accent-red); }
+
+/* BORDERS (Replaces the solid border) */
+.row.orange { border-left: 4px solid var(--accent-orange); }
+.row.green  { border-left: 4px solid var(--accent-green); }
+.row.blue   { border-left: 4px solid var(--accent-blue); }
+.row.purple { border-left: 4px solid var(--accent-purple); }
+.row.red    { border-left: 4px solid var(--accent-red); }
+
+/* TEXT */
+.text h2 {
+  margin: 0 0 10px 0;
+  font-size: 26px;
+  font-family: 'Playfair Display', serif;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* Optional: Match H2 color to the row accent */
+.orange .text h2 { color: var(--accent-orange); text-shadow: 0 0 8px rgba(247, 140, 108, 0.25); }
+.green .text h2 { color: var(--accent-green); text-shadow: 0 0 8px rgba(195, 232, 141, 0.25); }
+.blue .text h2 { color: var(--accent-blue); text-shadow: 0 0 8px rgba(130, 170, 255, 0.25); }
+.purple .text h2 { color: var(--accent-purple); text-shadow: 0 0 8px rgba(199, 146, 234, 0.25); }
+.red .text h2 { color: var(--accent-red); text-shadow: 0 0 8px rgba(240, 113, 120, 0.25); }
+
+.text p {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* MATRIX */
+.matrix pre {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: normal;
+  line-height: 1.4;
+  font-size: 16px;
+  color: #fff;
+  margin: 0 auto;
+  width: fit-content;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* Make matrix lines regular by removing colored text-shadow and using left borders instead */
+.orange .matrix pre { border-left: 2px solid var(--accent-orange); }
+.green .matrix pre { border-left: 2px solid var(--accent-green); }
+.blue .matrix pre { border-left: 2px solid var(--accent-blue); }
+.purple .matrix pre { border-left: 2px solid var(--accent-purple); }
+.red .matrix pre { border-left: 2px solid var(--accent-red); }
+
+/* DIAGRAM AREA */
+.diagram {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.diagram svg {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 25px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.4s ease;
+}
+
+.row:hover .diagram svg {
+  transform: scale(1.05);
+}
+
+/* SVG Overrides for Dark Theme (No HTML changes needed) */
+svg rect[fill="#f9f9f9"] {
+  fill: transparent;
+}
+
+svg line[stroke="#000"] {
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+/* Make SVG elements glow intensely */
+.orange svg { filter: drop-shadow(0 0 10px rgba(247, 140, 108, 0.35)); }
+.green svg { filter: drop-shadow(0 0 10px rgba(195, 232, 141, 0.35)); }
+.blue svg { filter: drop-shadow(0 0 10px rgba(130, 170, 255, 0.35)); }
+.purple svg { filter: drop-shadow(0 0 10px rgba(199, 146, 234, 0.35)); }
+.red svg { filter: drop-shadow(0 0 10px rgba(240, 113, 120, 0.35)); }
+
+/* Add responsive adjustments */
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+  }
+}
+
+/* NEW CONTENT STYLES (Examples, Lists, Multi-Matrix) */
+.example {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 15px;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.orange .example { border-left-color: var(--accent-orange); }
+.green .example { border-left-color: var(--accent-green); }
+.blue .example { border-left-color: var(--accent-blue); }
+.purple .example { border-left-color: var(--accent-purple); }
+.red .example { border-left-color: var(--accent-red); }
+
+.icon {
+  font-size: 18px;
+}
+
+.example-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.example-text strong {
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+.bullet-list {
+  margin: 15px 0 0 0;
+  padding-left: 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.bullet-list li {
+  margin-bottom: 5px;
+}
+
+.multi-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.multi-matrix div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.matrix-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
