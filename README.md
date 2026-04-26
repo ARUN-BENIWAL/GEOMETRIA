@@ -13,7 +13,7 @@ It transforms complex mathematical ideas into **real-time visual experiences**, 
 
 ## 🚀 Live Demo
 
-👉 https://your-project-name.vercel.app
+👉 https://geometria-six.vercel.app/
 
 ---
 
